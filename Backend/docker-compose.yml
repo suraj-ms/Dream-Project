@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+app:
+build: .
+ports:
+- "4000:4000"
+depends_on:
+- mysql
+environment:
+- NODE_ENV=development
+- PORT=4000
+- DB_HOST=mysql
+- DB_USER=root
+- DB_PASSWORD=rootpassword
+- DB_NAME=auth_db
+- ACCESS_TOKEN_SECRET=accesssecret
+- REFRESH_TOKEN_SECRET=refreshsecret
+volumes:
+- ./:/usr/src/app
+command: npm run dev
+mysql:
+image: mysql:8.1
+environment:
+MYSQL_ROOT_PASSWORD: rootpassword
+MYSQL_DATABASE: auth_db
+ports:
+- "3306:3306"
+volumes:
+- db_data:/var/lib/mysql
+
+
+volumes:
+db_data:
